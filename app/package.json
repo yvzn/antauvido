@@ -1,0 +1,23 @@
+{
+	"name": "@antauvido/app",
+	"version": "1.0.0",
+	"description": "A simple markdown preview",
+	"private": "true",
+	"scripts": {
+		"format": "prettier --write src",
+		"lint": "npm run lint:js && npm run lint:css",
+		"lint:js": "eslint src/**/*.js",
+		"lint:css": "stylelint src/**/*.css"
+	},
+	"author": "Yvan Razafindramanana",
+	"license": "Apache-2.0",
+	"devDependencies": {
+		"eslint": "^7.30.0",
+		"eslint-config-prettier": "^8.3.0",
+		"prettier": "^2.3.2",
+		"stylelint": "^13.13.1",
+		"stylelint-config-prettier": "^8.0.2",
+		"stylelint-config-standard": "^22.0.0",
+		"stylelint-order": "^4.1.0"
+	}
+}
