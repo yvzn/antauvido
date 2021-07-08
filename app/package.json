@@ -4,6 +4,9 @@
 	"description": "A simple markdown preview",
 	"private": "true",
 	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"serve": "vite preview",
 		"format": "prettier --write src",
 		"lint": "npm run lint:js && npm run lint:css",
 		"lint:js": "eslint src/**/*.js",
@@ -18,6 +21,7 @@
 		"stylelint": "^13.13.1",
 		"stylelint-config-prettier": "^8.0.2",
 		"stylelint-config-standard": "^22.0.0",
-		"stylelint-order": "^4.1.0"
+		"stylelint-order": "^4.1.0",
+		"vite": "^2.4.0"
 	}
 }
