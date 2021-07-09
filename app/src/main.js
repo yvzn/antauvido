@@ -1,3 +1,5 @@
-import './style.css'
+const config = {
+	apiUrl: import.meta.env.VITE_API_URL
+}
 
-console.debug('Hello world !');
+console.debug("Configuration:", config);
