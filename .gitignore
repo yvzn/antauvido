@@ -4,3 +4,9 @@ package-lock.json
 node_modules/
 dist/
 dist-ssr/
+
+# API
+local.settings.json
+*.suo
+bin/
+obj/

@@ -1,0 +1,65 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "api clean",
+			"command": "dotnet",
+			"args": [
+				"clean",
+				"/property:GenerateFullPaths=true",
+				"/consoleloggerparameters:NoSummary"
+			],
+			"type": "process",
+			"problemMatcher": "$msCompile",
+			"options": {
+				"cwd": "${workspaceFolder}/api\\src"
+			}
+		},
+		{
+			"label": "api build",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"/property:GenerateFullPaths=true",
+				"/consoleloggerparameters:NoSummary"
+			],
+			"type": "process",
+			"dependsOn": "api clean",
+			"group": "build",
+			"problemMatcher": "$msCompile",
+			"options": {
+				"cwd": "${workspaceFolder}/api\\src"
+			}
+		},
+		{
+			"label": "api start",
+			"type": "func",
+			"dependsOn": "api build",
+			"options": {
+				"cwd": "${workspaceFolder}/api\\src/bin/Debug/netcoreapp3.1"
+			},
+			"command": "host start",
+			"isBackground": true,
+			"problemMatcher": "$func-dotnet-watch"
+		},
+		{
+			"type": "npm",
+			"script": "dev",
+			"path": "app/",
+			"problemMatcher": [],
+			"label": "app start",
+			"detail": "vite"
+		},
+		{
+			"type": "npm",
+			"script": "lint",
+			"path": "app/",
+			"group": "build",
+			"problemMatcher": [
+				"$eslint-stylish"
+			],
+			"label": "app lint",
+			"detail": "npm run lint:js && npm run lint:css"
+		}
+	]
+}
