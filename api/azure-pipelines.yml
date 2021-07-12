@@ -1,0 +1,28 @@
+variables:
+- group: "production"
+
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - api
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: 'api/src/*.csproj'
+    arguments: '--configuration Release'
+- task: AzureFunctionApp@1
+  inputs:
+    azureSubscription: '$(azureSubscription)'
+    appType: 'functionAppLinux'
+    appName: '$(functionAppName)'
+    package: '$(System.DefaultWorkingDirectory)/api/src/**/*.zip'
+    runtimeStack: 'DOTNET|3.1'
