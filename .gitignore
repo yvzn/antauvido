@@ -1,11 +1,14 @@
 
 # APP
+# git update-index --skip-worktree app/.env.local
+.env.local
 package-lock.json
 node_modules/
 dist/
 dist-ssr/
 
 # API
+# git update-index --skip-worktree api/src/local.settings.json
 local.settings.json
 *.suo
 bin/

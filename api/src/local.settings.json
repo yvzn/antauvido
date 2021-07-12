@@ -1,0 +1,11 @@
+{
+	"//": [
+		"do not commit this file",
+		"git update-index --skip-worktree app/.env.local"
+	],
+	"IsEncrypted": false,
+	"Values": {
+		"AzureWebJobsStorage": "UseDevelopmentStorage=true",
+		"FUNCTIONS_WORKER_RUNTIME": "dotnet"
+	}
+}
