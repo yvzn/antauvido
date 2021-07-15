@@ -11,13 +11,15 @@
 
 <body>
 	<h1><abbr title="Markdown">M↓</abbr> preview</h1>
-	<form id="editor-form" method="POST" target="preview" action=import.meta.env.VITE_API_NEW_DOCUMENT_URL>
-		<textarea name="editor" placeholder="start typing markdown code here..."></textarea>
+	<form method="POST" target="preview" action=import.meta.env.VITE_API_NEW_DOCUMENT_URL>
+		<fieldset>
+			<textarea name="editor" placeholder="start typing markdown code here..."></textarea>
+		</fieldset>
+		<aside>
+			<button type="submit" title="Show preview">Preview ↓</button>
+		</aside>
 	</form>
-	<aside>
-		<button form="editor-form" type="submit" title="Show preview">Preview ↓</button>
-	</aside>
-	<iframe name="preview" src="/empty.html"></iframe>
+	<iframe name="preview" src="/empty.html" title="Document preview"></iframe>
 	<script type="module" src="/src/main.js"></script>
 </body>
 
