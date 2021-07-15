@@ -84,8 +84,20 @@
 			"problemMatcher": [
 				"$eslint-stylish"
 			],
-			"label": "app lint",
-			"detail": "npm run lint:js && npm run lint:css"
-		}
+		},
+		{
+			"label": "app publish",
+			"type": "npm",
+			"script": "build",
+			"path": "app/",
+			"problemMatcher": [],
+		},
+		{
+			"label": "app start",
+			"type": "npm",
+			"script": "dev",
+			"path": "app/",
+			"problemMatcher": [],
+		},
 	]
 }

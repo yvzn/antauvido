@@ -10,6 +10,7 @@
 	],
 	"ignorePatterns": [
 		"node_modules",
+		"vite.config.js",
 		"dist",
 		"dist-ssr"
 	],
