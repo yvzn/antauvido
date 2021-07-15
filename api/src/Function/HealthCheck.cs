@@ -10,7 +10,7 @@ namespace Ludeo.Antauvido.Api
 	{
 		[FunctionName("HealthCheck")]
 		public static IActionResult Run(
-			[HttpTrigger(AuthorizationLevel.Function, "get", Route = "healthz")]
+			[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "healthz")]
 			HttpRequest request)
 		{
 			return new OkObjectResult("Healthy");
