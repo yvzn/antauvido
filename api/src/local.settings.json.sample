@@ -1,8 +1,4 @@
 {
-	"//": [
-		"do not commit this file",
-		"git update-index --skip-worktree api/src/local.settings.json"
-	],
 	"IsEncrypted": false,
 	"Values": {
 		"AzureWebJobsStorage": "UseDevelopmentStorage=true",

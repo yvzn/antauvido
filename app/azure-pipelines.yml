@@ -1,5 +1,7 @@
 variables:
 - group: "production"
+- name: API_URL
+  value: $apiUrl
 
 trigger:
   branches:
