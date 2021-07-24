@@ -1,7 +1,5 @@
 variables:
 - group: "production"
-- name: API_URL
-  value: $apiUrl
 
 trigger:
   branches:
@@ -15,6 +13,11 @@ pool:
   vmImage: windows-latest
 
 steps:
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: './build-env-production.ps1 -ApiUrl $(apiUrl)'
+    workingDirectory: 'app'
 - task: Npm@1
   displayName: 'npm install'
   inputs:

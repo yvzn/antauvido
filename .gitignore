@@ -1,6 +1,7 @@
 
 # APP
 app/.env.local
+app/.env.production
 package-lock.json
 node_modules/
 dist/
