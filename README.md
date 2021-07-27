@@ -4,7 +4,7 @@ A simple markdown preview tool.
 
 The front-end is a vanilla JS website packaged with [ViteJS](https://vitejs.dev/)
 
-The back-end API is a serverless [Azure Function app](https://docs.microsoft.com/en-us/azure/azure-functions/).
+The back-end is a serverless [Azure Function app](https://docs.microsoft.com/en-us/azure/azure-functions/).
 
 ## Run Locally
 
@@ -17,16 +17,16 @@ The back-end API is a serverless [Azure Function app](https://docs.microsoft.com
 #### Start
 
 ```bash
-cd app
-npm install
-npm run dev
+cd app ↲
+npm install ↲
+npm run dev ↲
 ```
 
 Then open http://localhost:3000/ in browser of choice.
 
 <kbd>Ctrl + C</kbd> to exit
 
-### Run the backend
+### Run the back-end
 
 #### Requirements
 
@@ -56,9 +56,69 @@ Then open http://localhost:7071/api/healthz in browser of choice.
 
 <kbd>Ctrl + C</kbd> to stop the app.
 
-## CI / CD
+## Run on Azure
+
+### Requirements
+
+- A valid *Azure subscription*
+- A *resource group*
+- An *Function app*
+- A *storage account* (can be the same storage account as the *Function app*)
+
+### Front-End
+
+The front-end is deployed as a static website within selected *storage account*:
+- The *storage account* has to be [general-purpose v2](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-upgrade?tabs=azure-portal))
+- *Static website* hosting has to be [enabled](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website-how-to?tabs=azure-portal#enable-static-website-hosting)
+
+#### Build and upload
+
+```bash
+cd app ↲
+npm run build ↲
+```
+
+Then upload the files in `dist` folder to the *storage account* `$web` container via method of choice (Azure Portal, `AzCopy`, etc.) or via CI/CD
+
+### Back-End
+
+The back-end is deployed to the *Function app* via method of choice (Azure Function Core Tools, Visual Studio, etc.) or via CI/CD
+
+#### Settings
+
+Make sure CORS is setup properly for the front-end to be able to call the back-end.
+
+(Optional) Add the following settings in the *Function app*:
+- `AntauvidoDocumentMinimumSize` : Periodically delete documents _below_ a certain size
+- `AntauvidoDocumentTimeOut`: Periodically delete documents modified before a certain threshold
+
+#### Build and upload
+
+```bash
+cd api/src ↲
+dotnet publish --configuration Release
+```
+
+Then upload the files in `bin/Release/netcoreapp3.1` folder to the *Function app*
+
+### CI/CD
 
 Pipeline definitions are provided for integration in [Azure DevOps](https://dev.azure.com)
+- `app/azure-pipelines.yml` for the front-end
+- `api/azure-pipelines.yml` for the back-end
+
+#### Requirements
+
+Create a *variable group* named `production` in *Azure DevOps' pipelines*.
+
+Add the following variables:
+- `azureSubscription` : Name of the *subscription* to deploy to
+- `functionAppName`: Name of the *Function app*
+- `storageAccountName`: Name of the *storage account*
+- `apiUrl`: base URL of the *Function app*
+
+Make sure your *Azure DevOps principal* has write access to the *storage account*:
+- Add the role *Storage Blob Data Contributor* if necessary
 
 ## License
 
