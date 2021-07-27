@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
@@ -7,51 +6,36 @@ using Microsoft.Extensions.Logging;
 using System.IO;
 using System;
 using System.Text;
+using Ludeo.Antauvido.Api.Service;
 
-namespace Ludeo.Antauvido.Api
+namespace Ludeo.Antauvido.Api.Function
 {
 	public static class CreateDocument
 	{
+		private static DocumentRequestService documentRequestService = new DocumentRequestService();
+
 		[FunctionName("CreateDocument")]
 		public static async Task RunAsync(
-			[HttpTrigger(AuthorizationLevel.Function, "post", Route = "document")]
+			[HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "document")]
 			HttpRequest request,
 			IBinder binder, // use IBinder instead of blob output binding because path is dynamic
 			ILogger logger)
 		{
-			var document = await ReadRequestAsync(request);
+			var document = await documentRequestService.ReadDocumentAsync(request);
 
 			var (documentId, blobPath) = await SaveDocumentAsync(document, binder);
 
-			logger.LogInformation("Created document {BlobPath}", blobPath);
+			logger.LogInformation("Created document {BlobPath} with {BlobSize} chars", blobPath, document.Length);
 
 			if (request.HasFormContentType)
 			{
-				RedirectToPreview(request, documentId);
+				documentRequestService.RedirectToPreview(request, documentId);
 			}
 			else
 			{
 				// no input provided, just create the document and return its URI
-				await OutputDocumentLocationAsync(request, documentId);
+				await ReplyRequestWithDocumentCreatedAsync(request, documentId);
 			}
-		}
-
-		private static async Task<string> ReadRequestAsync(HttpRequest request)
-		{
-			if (request.HasFormContentType)
-			{
-				// TODO sanitize user input
-
-				var form = await request.ReadFormAsync();
-				var document = form["editor"];
-
-				if (document.Count > 0)
-				{
-					return document[0];
-				}
-			}
-
-			return "";
 		}
 
 		private static async Task<(Guid documentId, string blobPath)> SaveDocumentAsync(
@@ -64,21 +48,13 @@ namespace Ludeo.Antauvido.Api
 			using var outputStream = await binder.BindAsync<Stream>(
 				new BlobAttribute(blobPath, FileAccess.Write));
 
-			using var documentStream = new StreamWriter(outputStream);
-			await documentStream.WriteAsync(document);
+			using var documentWriter = new StreamWriter(outputStream);
+			await documentWriter.WriteAsync(document);
 
 			return (documentId, blobPath);
 		}
 
-		private static void RedirectToPreview(HttpRequest request, Guid documentId)
-		{
-			var previewUri = $"/api/preview/{documentId}";
-			request.HttpContext.Response.Headers.Add("Location", previewUri);
-
-			request.HttpContext.Response.StatusCode = StatusCodes.Status303SeeOther;
-		}
-
-		private static async Task OutputDocumentLocationAsync(HttpRequest request, Guid documentId)
+		private static async Task ReplyRequestWithDocumentCreatedAsync(HttpRequest request, Guid documentId)
 		{
 			var documentUri = $"/api/document/{documentId}";
 			request.HttpContext.Response.Headers.Add("Content-Location", documentUri);

@@ -4,7 +4,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 
-namespace Ludeo.Antauvido.Api
+namespace Ludeo.Antauvido.Api.Function
 {
 	public static class HealthCheck
 	{

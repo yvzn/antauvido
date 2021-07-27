@@ -5,18 +5,19 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 
-namespace Ludeo.Antauvido.Api
+namespace Ludeo.Antauvido.Api.Function
 {
 	public static class PreviewDocument
 	{
 		[FunctionName("PreviewDocument")]
 		public static async Task<IActionResult> RunAsync(
-			[HttpTrigger(AuthorizationLevel.Function, "get", Route = "preview/{documentId:guid}")]
+			[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "preview/{documentId:guid}")]
 			HttpRequest request,
 			[Blob("documents/{documentId}", FileAccess.Read)]
 			Stream? inputStream)
 		{
-			if (inputStream is null) {
+			if (inputStream is null)
+			{
 				return new NotFoundResult();
 			}
 
