@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Ludeo.Antauvido.Api.Service
 {
-	public class DocumentRequestService
+	internal class DocumentRequestService
 	{
 		internal async Task<string> ReadDocumentAsync(HttpRequest request)
 		{
