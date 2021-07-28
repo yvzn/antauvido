@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.Storage.Blob;
 using Ludeo.Antauvido.Api.Service;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ludeo.Antauvido.Api.Function
 {
@@ -15,7 +16,7 @@ namespace Ludeo.Antauvido.Api.Function
 		private static DocumentRequestService documentRequestService = new DocumentRequestService();
 
 		[FunctionName("UpdateDocument")]
-		public static async Task RunAsync(
+		public static async Task<IActionResult> RunAsync(
 			[HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "document/{documentId:guid}")]
 			HttpRequest request,
 			[Blob("documents")]
@@ -28,8 +29,7 @@ namespace Ludeo.Antauvido.Api.Function
 			{
 				logger.LogInformation("Failed to update document {BlobPath} (not found)", $"documents/{documentId}");
 
-				request.HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
-				return;
+				return new NotFoundResult();
 			}
 
 			var document = await documentRequestService.ReadDocumentAsync(request);
@@ -39,6 +39,7 @@ namespace Ludeo.Antauvido.Api.Function
 			logger.LogInformation("Updated document {BlobPath} with {BlobSize} chars", cloudBlockBlob.Name, document.Length);
 
 			documentRequestService.RedirectToPreview(request, documentId);
+			return new EmptyResult();
 		}
 
 		private static async Task SaveDocumentAsync(string document, CloudBlockBlob cloudBlockBlob)

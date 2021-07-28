@@ -4,6 +4,8 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Markdig;
+using System.Text;
 
 namespace Ludeo.Antauvido.Api.Function
 {
@@ -23,10 +25,32 @@ namespace Ludeo.Antauvido.Api.Function
 
 			using var streamReader = new StreamReader(inputStream);
 
-			// TODO parse and render Markdown document
-			var content = await streamReader.ReadToEndAsync();
+			var markdown = await streamReader.ReadToEndAsync();
+			var markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+			var html = Markdown.ToHtml(markdown, markdownPipeline);
 
-			return new OkObjectResult(content);
+			var appUrl = System.Environment.GetEnvironmentVariable("AntauvidoAppUrl");
+
+			var result = $@"
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Antaŭvido: document preview</title>
+	<meta charset='UTF-8' />
+	<meta name='viewport' content='width=device-width, initial-scale=1' />
+</head>
+<body>
+	<main>{html}</main>
+</body>
+</html>
+			";
+
+			request.HttpContext.Response.StatusCode = StatusCodes.Status200OK;
+			request.HttpContext.Response.Headers.Add("Content-Type", @"text/html; charset=""UTF-8""");
+
+			await request.HttpContext.Response.Body.WriteAsync(Encoding.UTF8.GetBytes(result));
+			await request.HttpContext.Response.Body.FlushAsync();
+			return new EmptyResult();
 		}
 	}
 }

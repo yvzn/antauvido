@@ -7,6 +7,7 @@ using System.IO;
 using System;
 using System.Text;
 using Ludeo.Antauvido.Api.Service;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ludeo.Antauvido.Api.Function
 {
@@ -15,7 +16,7 @@ namespace Ludeo.Antauvido.Api.Function
 		private static DocumentRequestService documentRequestService = new DocumentRequestService();
 
 		[FunctionName("CreateDocument")]
-		public static async Task RunAsync(
+		public static async Task<IActionResult> RunAsync(
 			[HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "document")]
 			HttpRequest request,
 			IBinder binder, // use IBinder instead of blob output binding because path is dynamic
@@ -36,6 +37,8 @@ namespace Ludeo.Antauvido.Api.Function
 				// no input provided, just create the document and return its URI
 				await ReplyRequestWithDocumentCreatedAsync(request, documentId);
 			}
+
+			return new EmptyResult();
 		}
 
 		private static async Task<(Guid documentId, string blobPath)> SaveDocumentAsync(
@@ -63,6 +66,7 @@ namespace Ludeo.Antauvido.Api.Function
 
 			// if Content-Location header cannot be read (e.g. because of CORS) document URI is made available in response body
 			await request.HttpContext.Response.Body.WriteAsync(Encoding.UTF8.GetBytes(documentUri));
+			await request.HttpContext.Response.Body.FlushAsync();
 		}
 	}
 }
