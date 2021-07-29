@@ -5,9 +5,13 @@
 	<RootNamespace>Ludeo.Antauvido.Api</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="HtmlSanitizer" Version="5.0.404" />
     <PackageReference Include="Markdig" Version="0.25.0" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="4.0.4" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.13" />
+  </ItemGroup>
+  <ItemGroup>
+  	<FunctionsPreservedDependencies Include="System.Text.Encoding.CodePages.dll" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">

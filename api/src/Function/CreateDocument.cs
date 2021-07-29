@@ -13,7 +13,7 @@ namespace Ludeo.Antauvido.Api.Function
 {
 	public static class CreateDocument
 	{
-		private static DocumentRequestService documentRequestService = new DocumentRequestService();
+		private static readonly DocumentRequestService documentRequestService = new DocumentRequestService();
 
 		[FunctionName("CreateDocument")]
 		public static async Task<IActionResult> RunAsync(

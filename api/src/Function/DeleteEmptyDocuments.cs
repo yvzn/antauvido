@@ -8,7 +8,7 @@ namespace Ludeo.Antauvido.Api.Function
 {
 	public static class DeleteEmptyDocuments
 	{
-		private static DocumentCleanUpService documentCleanUpService = new DocumentCleanUpService();
+		private static readonly DocumentCleanUpService documentCleanUpService = new DocumentCleanUpService();
 
 		[FunctionName("DeleteEmptyDocuments")]
 		public static async Task RunAsync(

@@ -6,11 +6,15 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Markdig;
 using System.Text;
+using Ganss.XSS;
 
 namespace Ludeo.Antauvido.Api.Function
 {
 	public static class PreviewDocument
 	{
+		private static readonly MarkdownPipeline markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+		private static readonly IHtmlSanitizer htmlSanitizer = new HtmlSanitizer();
+
 		[FunctionName("PreviewDocument")]
 		public static async Task<IActionResult> RunAsync(
 			[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "preview/{documentId:guid}")]
@@ -26,10 +30,9 @@ namespace Ludeo.Antauvido.Api.Function
 			using var streamReader = new StreamReader(inputStream);
 
 			var markdown = await streamReader.ReadToEndAsync();
-			var markdownPipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-			var html = Markdown.ToHtml(markdown, markdownPipeline);
 
-			var appUrl = System.Environment.GetEnvironmentVariable("AntauvidoAppUrl");
+			var html = Markdown.ToHtml(markdown, markdownPipeline);
+			var sanitized = htmlSanitizer.Sanitize(html);
 
 			var result = $@"
 <!DOCTYPE html>
@@ -40,10 +43,10 @@ namespace Ludeo.Antauvido.Api.Function
 	<meta name='viewport' content='width=device-width, initial-scale=1' />
 </head>
 <body>
-	<main>{html}</main>
+	<main>{sanitized}</main>
 </body>
 </html>
-			";
+";
 
 			request.HttpContext.Response.StatusCode = StatusCodes.Status200OK;
 			request.HttpContext.Response.Headers.Add("Content-Type", @"text/html; charset=""UTF-8""");

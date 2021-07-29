@@ -13,7 +13,7 @@ namespace Ludeo.Antauvido.Api.Function
 {
 	public static class UpdateDocument
 	{
-		private static DocumentRequestService documentRequestService = new DocumentRequestService();
+		private static readonly DocumentRequestService documentRequestService = new DocumentRequestService();
 
 		[FunctionName("UpdateDocument")]
 		public static async Task<IActionResult> RunAsync(

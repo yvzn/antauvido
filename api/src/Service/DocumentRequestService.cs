@@ -10,8 +10,6 @@ namespace Ludeo.Antauvido.Api.Service
 		{
 			if (request.HasFormContentType)
 			{
-				// TODO sanitize user input
-
 				var form = await request.ReadFormAsync();
 				var document = form["document"];
 

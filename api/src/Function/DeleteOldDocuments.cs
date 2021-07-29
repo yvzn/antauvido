@@ -9,7 +9,7 @@ namespace Ludeo.Antauvido.Api.Function
 {
 	public static class DeleteOldDocuments
 	{
-		private static DocumentCleanUpService documentCleanUpService = new DocumentCleanUpService();
+		private static readonly DocumentCleanUpService documentCleanUpService = new DocumentCleanUpService();
 
 		[FunctionName("DeleteOldDocuments")]
 		public static async Task RunAsync(
