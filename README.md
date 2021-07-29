@@ -2,6 +2,16 @@
 
 A simple markdown preview tool.
 
+## Why ?
+
+I want a simple markdown preview tool, online in the browser.
+
+Many services aldready offer same or better features. But I want to trust my tooling not to use my data for unintended purposes.
+
+So I built my own tool 😃. Antaŭvido means *preview* in esperanto.
+
+## How ?
+
 The front-end is a vanilla JS website packaged with [ViteJS](https://vitejs.dev/)
 
 The back-end is a serverless [Azure Function app](https://docs.microsoft.com/en-us/azure/azure-functions/).
@@ -35,6 +45,8 @@ Then open http://localhost:3000/ in browser of choice.
 - Optional: [Azure Storage Emulator](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator#get-the-storage-emulator)
 
 An *Azure storage account* is required to temporarily store and cache the documents. The storage account connection string has to be configured in the `AzureWebJobsStorage` setting in `api/src/local.settings.json`.
+
+The storage account is cleaned up regularly from empty documents and old documents older - so the storage account size should never be too large.
 
 ##### Option 1
 
@@ -123,3 +135,12 @@ Make sure your *Azure DevOps principal* has write access to the *storage account
 ## License
 
 Licensed under [Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/)
+
+### Third parties
+
+Antaŭvido uses some open-source, third party libraries:
+
+- [.NET SDK 3.x](https://github.com/dotnet/sdk): : MIT License, Copyright (c) .NET Foundation
+- [Azure Function Core Tools v3.x](https://github.com/Azure/azure-functions-core-tools): MIT License, Copyright (c) .NET Foundation
+- [Markdig](https://github.com/xoofx/markdig/): BSD 2-Clause "Simplified" License, Copyright (c) 2018-2019, Alexandre Mutel
+- [HtmlSanitizer](https://github.com/mganss/HtmlSanitizer): MIT X11 License, Copyright (c) 2013-2016 Michael Ganss and HtmlSanitizer contributors
