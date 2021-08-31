@@ -34,19 +34,7 @@ namespace Ludeo.Antauvido.Api.Function
 			var html = Markdown.ToHtml(markdown, markdownPipeline);
 			var sanitized = htmlSanitizer.Sanitize(html);
 
-			var result = $@"
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Antaŭvido: document preview</title>
-	<meta charset='UTF-8' />
-	<meta name='viewport' content='width=device-width, initial-scale=1' />
-</head>
-<body>
-	<main>{sanitized}</main>
-</body>
-</html>
-";
+			var result = string.Format(htmlTemplate, sanitized);
 
 			request.HttpContext.Response.StatusCode = StatusCodes.Status200OK;
 			request.HttpContext.Response.Headers.Add("Content-Type", @"text/html; charset=""UTF-8""");
@@ -55,5 +43,18 @@ namespace Ludeo.Antauvido.Api.Function
 			await request.HttpContext.Response.Body.FlushAsync();
 			return new EmptyResult();
 		}
+
+		private static readonly string htmlTemplate = @"
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Antaŭvido: document preview</title>
+	<meta charset='UTF-8' />
+	<meta name='viewport' content='width=device-width, initial-scale=1' />
+</head>
+<body>
+	<main>{0}</main>
+</body>
+</html>";
 	}
 }
