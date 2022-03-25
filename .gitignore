@@ -12,3 +12,6 @@ api/src/local.settings.json
 *.suo
 bin/
 obj/
+
+# DB
+db/azurite/*

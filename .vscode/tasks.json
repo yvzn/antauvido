@@ -99,5 +99,12 @@
 			"path": "app/",
 			"problemMatcher": [],
 		},
+		{
+			"type": "npm",
+			"script": "dev",
+			"path": "db/",
+			"problemMatcher": [],
+			"label": "db start"
+		},
 	]
 }

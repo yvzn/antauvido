@@ -16,7 +16,7 @@ The front-end is a vanilla JS website packaged with [ViteJS](https://vitejs.dev/
 
 The back-end is a serverless [Azure Function app](https://docs.microsoft.com/en-us/azure/azure-functions/).
 
-## Run Locally
+## Run locally
 
 ### Run the front-end
 
@@ -25,6 +25,8 @@ The back-end is a serverless [Azure Function app](https://docs.microsoft.com/en-
 - [NodeJS 12](https://nodejs.org/en/download/) or higher
 
 #### Start
+
+Copy `.env.local.sample` to `.env.local`, then:
 
 ```bash
 cd app ↲
@@ -36,27 +38,49 @@ Then open http://localhost:3000/ in browser of choice.
 
 <kbd>Ctrl + C</kbd> to exit
 
+### Configure a database for the back-end
+
+Some form of storage is required to temporarily store and cache the documents.
+
+The storage is cleaned up regularly from empty documents and old documents - so the storage size should never be too large.
+
+An emulator (such as [Azurite])(https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=npm) can be used to run the database locally.
+
+#### Requirements
+
+- [NodeJS 12](https://nodejs.org/en/download/) or higher
+
+#### Start
+
+This will install and run the [Azurite](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=npm) emulator.
+
+```bash
+cd db ↲
+npm install ↲
+npm run dev ↲
+```
+
+<kbd>Ctrl + C</kbd> to stop the emulator.
+
 ### Run the back-end
 
 #### Requirements
 
 - [.NET SDK 3.x](https://dotnet.microsoft.com/download) or higher
 - [Azure Function Core Tools v3.x](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local#install-the-azure-functions-core-tools)
-- Optional: [Azure Storage Emulator](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator#get-the-storage-emulator)
 
-An *Azure storage account* is required to temporarily store and cache the documents. The storage account connection string has to be configured in the `AzureWebJobsStorage` setting in `api/src/local.settings.json`.
+#### Configuration
 
-The storage account is cleaned up regularly from empty documents and old documents older - so the storage account size should never be too large.
-
-##### Option 1
-
-Use the connection string from the storage account of the deployed *Azure Function App* (available in Azure Portal)
-
-##### Option 2
-
-Install [Azure Storage Emulator](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator#get-the-storage-emulator) and set the connection string to `UseDevelopmentStorage=true`
+The storage connection string has to be configured in the `AzureWebJobsStorage` setting:
+- For the local database set the connection string to `UseDevelopmentStorage=true`
 
 #### Build & start
+
+Copy `local.settings.json.sample` to `local.settings.json`.
+
+Configure the `AzureWebJobsStorage` setting in `local.settings.json`.
+
+Then:
 
 ```bash
 cd api/src ↲
@@ -80,7 +104,7 @@ Then open http://localhost:7071/api/healthz in browser of choice.
 ### Front-End
 
 The front-end is deployed as a static website within selected *storage account*:
-- The *storage account* has to be [general-purpose v2](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-upgrade?tabs=azure-portal))
+- The *storage account* has to be [general-purpose v2](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-upgrade?tabs=azure-portal)
 - *Static website* hosting has to be [enabled](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website-how-to?tabs=azure-portal#enable-static-website-hosting)
 
 #### Build and upload
@@ -108,7 +132,7 @@ Make sure CORS is setup properly for the front-end to be able to call the back-e
 
 ```bash
 cd api/src ↲
-dotnet publish --configuration Release
+dotnet publish --configuration Release ↲
 ```
 
 Then upload the files in `bin/Release/netcoreapp3.1` folder to the *Function app*
@@ -127,10 +151,15 @@ Add the following variables:
 - `azureSubscription` : Name of the *subscription* to deploy to
 - `functionAppName`: Name of the *Function app*
 - `storageAccountName`: Name of the *storage account*
+- `storageAccountKey`: Key for the *storage account*
 - `apiUrl`: base URL of the *Function app*
 
 Make sure your *Azure DevOps principal* has write access to the *storage account*:
 - Add the role *Storage Blob Data Contributor* if necessary
+- Add the role *Storage Blob Data Owner* if necessary
+
+[Full instructions here](https://brettmckenzie.net/2020/03/23/azure-pipelines-copy-files-task-authentication-failed/)
+
 
 ## License
 
@@ -138,9 +167,10 @@ Licensed under [Apache License 2.0](https://choosealicense.com/licenses/apache-2
 
 ### Third parties
 
-Antaŭvido uses some open-source, third party libraries:
+Antaŭvido uses some open-source, third party software:
 
-- [.NET SDK 3.x](https://github.com/dotnet/sdk): : MIT License, Copyright (c) .NET Foundation
+- [.NET SDK 3.x](https://github.com/dotnet/sdk): MIT License, Copyright (c) .NET Foundation
 - [Azure Function Core Tools v3.x](https://github.com/Azure/azure-functions-core-tools): MIT License, Copyright (c) .NET Foundation
 - [Markdig](https://github.com/xoofx/markdig/): BSD 2-Clause "Simplified" License, Copyright (c) 2018-2019, Alexandre Mutel
 - [HtmlSanitizer](https://github.com/mganss/HtmlSanitizer): MIT X11 License, Copyright (c) 2013-2016 Michael Ganss and HtmlSanitizer contributors
+- [ViteJS](https://github.com/vitejs/vite): MIT License, Copyright (c) 2019-present Evan You & Vite Contributors
