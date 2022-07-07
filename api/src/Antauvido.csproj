@@ -4,11 +4,14 @@
 		<AzureFunctionsVersion>v4</AzureFunctionsVersion>
 		<RootNamespace>Ludeo.Antauvido.Api</RootNamespace>
 	</PropertyGroup>
+	<PropertyGroup>
+		<Copyright>Copyright 2021-2022 Yvan Razafindramanana</Copyright>
+	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="HtmlSanitizer" Version="7.1.488" />
-		<PackageReference Include="Markdig" Version="0.28.0" />
+		<PackageReference Include="HtmlSanitizer" Version="7.1.512" />
+		<PackageReference Include="Markdig" Version="0.30.0" />
 		<PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="4.0.5" />
-		<PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.1.0" />
+		<PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.1.1" />
 	</ItemGroup>
 	<ItemGroup>
 		<FunctionsPreservedDependencies Include="System.Text.Encoding.CodePages.dll" />
