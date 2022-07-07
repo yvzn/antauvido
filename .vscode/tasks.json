@@ -36,7 +36,7 @@
 			"type": "func",
 			"dependsOn": "api build",
 			"options": {
-				"cwd": "${workspaceFolder}/api/src/bin/Debug/netcoreapp3.1"
+				"cwd": "${workspaceFolder}/api/src/bin/Debug/net6.0"
 			},
 			"command": "host start",
 			"isBackground": true,
@@ -83,21 +83,21 @@
 			"group": "build",
 			"problemMatcher": [
 				"$eslint-stylish"
-			],
+			]
 		},
 		{
 			"label": "app publish",
 			"type": "npm",
 			"script": "build",
 			"path": "app/",
-			"problemMatcher": [],
+			"problemMatcher": []
 		},
 		{
 			"label": "app start",
 			"type": "npm",
 			"script": "dev",
 			"path": "app/",
-			"problemMatcher": [],
+			"problemMatcher": []
 		},
 		{
 			"type": "npm",
@@ -105,6 +105,6 @@
 			"path": "db/",
 			"problemMatcher": [],
 			"label": "db start"
-		},
+		}
 	]
 }

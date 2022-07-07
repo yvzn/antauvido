@@ -135,7 +135,7 @@ cd api/src ↲
 dotnet publish --configuration Release ↲
 ```
 
-Then upload the files in `bin/Release/netcoreapp3.1` folder to the *Function app*
+Then upload the files in `bin/Release/net6.0` folder to the *Function app*
 
 ### CI/CD
 
@@ -163,14 +163,28 @@ Make sure your *Azure DevOps principal* has write access to the *storage account
 
 ## License
 
-Licensed under [Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/)
+[Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/)
 
-### Third parties
+Copyright 2021-2022 Yvan Razafindramanana
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+## Third parties
 
 Antaŭvido uses some open-source, third party software:
 
-- [.NET SDK 3.x](https://github.com/dotnet/sdk): MIT License, Copyright (c) .NET Foundation
-- [Azure Function Core Tools v3.x](https://github.com/Azure/azure-functions-core-tools): MIT License, Copyright (c) .NET Foundation
+- [.NET SDK](https://github.com/dotnet/sdk): MIT License, Copyright (c) .NET Foundation
+- [Azure Function Core Tools](https://github.com/Azure/azure-functions-core-tools): MIT License, Copyright (c) .NET Foundation
 - [Markdig](https://github.com/xoofx/markdig/): BSD 2-Clause "Simplified" License, Copyright (c) 2018-2019, Alexandre Mutel
 - [HtmlSanitizer](https://github.com/mganss/HtmlSanitizer): MIT X11 License, Copyright (c) 2013-2016 Michael Ganss and HtmlSanitizer contributors
 - [ViteJS](https://github.com/vitejs/vite): MIT License, Copyright (c) 2019-present Evan You & Vite Contributors
