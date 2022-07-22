@@ -1,12 +1,20 @@
-const { resolve } = require('path');
+import { defineConfig } from "vite";
+import { resolve } from 'path';
+import dotEnvHTMLPlugin from "vite-plugin-dotenv-in-html";
 
-module.exports = {
-  build: {
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-        empty: resolve(__dirname, 'empty.html')
-      }
-    }
-  }
-}
+// https://vitejs.dev/config/
+export default defineConfig(({ mode }) => {
+	return {
+		build: {
+			rollupOptions: {
+				input: {
+					main: resolve(__dirname, 'index.html'),
+					empty: resolve(__dirname, 'empty.html')
+				}
+			}
+		},
+		plugins: [
+			dotEnvHTMLPlugin(mode),
+		],
+	};
+});
