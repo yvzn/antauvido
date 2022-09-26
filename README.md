@@ -22,7 +22,7 @@ The back-end is a serverless [Azure Function app](https://docs.microsoft.com/en-
 
 #### Requirements
 
-- [NodeJS 12](https://nodejs.org/en/download/) or higher
+- [NodeJS 14](https://nodejs.org/en/download/) or higher
 
 #### Start
 
@@ -34,17 +34,17 @@ npm install ↲
 npm run dev ↲
 ```
 
-Then open http://localhost:3000/ in browser of choice.
+Then open http://localhost:5173/ in browser of choice.
 
 <kbd>Ctrl + C</kbd> to exit
 
 ### Configure a database for the back-end
 
-Some form of storage is required to temporarily store and cache the documents.
+Some storage is required to temporarily store and cache the documents.
+
+A storage emulator (such as [Azurite])(https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=npm) can be used to run a storage database locally.
 
 The storage is cleaned up regularly from empty documents and old documents - so the storage size should never be too large.
-
-An emulator (such as [Azurite])(https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=npm) can be used to run the database locally.
 
 #### Requirements
 
