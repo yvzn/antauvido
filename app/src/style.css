@@ -54,7 +54,7 @@ textarea {
 	width: 100%;
 }
 
-@media only screen and (min-width: 64em) {
+@media only screen and (width >= 64em) {
 	aside {
 		align-items: center;
 		grid-column-start: 2;
