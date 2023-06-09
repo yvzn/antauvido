@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Markdig;
 using System.Text;
-using Ganss.XSS;
+using Ganss.Xss;
 
 namespace Ludeo.Antauvido.Api.Function
 {

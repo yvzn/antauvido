@@ -8,10 +8,10 @@
 		<Copyright>Copyright 2021-2022 Yvan Razafindramanana</Copyright>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="HtmlSanitizer" Version="7.1.512" />
-		<PackageReference Include="Markdig" Version="0.30.0" />
+		<PackageReference Include="HtmlSanitizer" Version="8.0.645" />
+		<PackageReference Include="Markdig" Version="0.31.0" />
 		<PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="4.0.5" />
-		<PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.1.1" />
+		<PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.2.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<FunctionsPreservedDependencies Include="System.Text.Encoding.CodePages.dll" />
