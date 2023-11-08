@@ -35,15 +35,10 @@ jobs:
     runOnce:
       deploy:
         steps:
-        - task: DownloadPipelineArtifact@2
-          inputs:
-            buildType: 'current'
-            artifactName: 'api'
-            targetPath: 'api/src/bin/Release'
         - task: AzureFunctionApp@1
           inputs:
             azureSubscription: '$(azureSubscription)'
             appType: 'functionAppLinux'
             appName: '$(functionAppName)'
-            package: '$(System.DefaultWorkingDirectory)/api/src/**/*.zip'
+            package: '$(Pipeline.Workspace)/api/*.zip'
             runtimeStack: 'DOTNET|6.0'
