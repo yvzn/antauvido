@@ -21,7 +21,7 @@
 		"stylelint": "^15.10.1",
 		"stylelint-config-standard": "^33.0.0",
 		"stylelint-order": "^6.0.3",
-		"vite": "^4.5.3",
+		"vite": "^4.5.5",
 		"vite-plugin-dotenv-in-html": "^4.0.0"
 	}
 }
