@@ -2,6 +2,8 @@
 
 A simple markdown preview tool.
 
+📌 Antaŭvido is **now archived**. I suggest to use the newer tool [htmd](https://github.com/yvzn/htmd) instead.
+
 ## Why ?
 
 I want a simple markdown preview tool, online in the browser.
